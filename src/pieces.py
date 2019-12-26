@@ -60,12 +60,12 @@ bQueen = Piece(Type.queen, 9, 'BQ', queenMove, black=True)
 bKing = Piece(Type.king, 9999, 'BK', kingMove, black=True)
 
 #WHITE
-wPawn = Piece(Type.pawn, 1, 'Bp', [[-1, 0]])
-wKnight = Piece(Type.knight, 3, 'Bk', knightMove)
-wBishop = Piece(Type.bishop, 3.25, 'Bb', bishopMove)
-wRook = Piece(Type.rook, 5, 'Br', rookMove)
-wQueen = Piece(Type.queen, 9, 'BQ', queenMove)
-wKing = Piece(Type.king, 9999, 'BK', kingMove)
+wPawn = Piece(Type.pawn, 1, 'Wp', [[-1, 0]])
+wKnight = Piece(Type.knight, 3, 'Wk', knightMove)
+wBishop = Piece(Type.bishop, 3.25, 'Wb', bishopMove)
+wRook = Piece(Type.rook, 5, 'Wr', rookMove)
+wQueen = Piece(Type.queen, 9, 'WQ', queenMove)
+wKing = Piece(Type.king, 9999, 'WK', kingMove)
 
 
 if __name__ == '__main__':
