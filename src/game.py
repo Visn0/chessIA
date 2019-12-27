@@ -52,10 +52,9 @@ class Game(object):
 
         return b
 
-    def tableToCoord(x, y):
-        #TODO
-        r = x
-        c = y
+    def tableToCoord(row, letter):
+        r = 8 - row
+        c = ord(letter) - ord('a')
         return (r, c)
 
     def inside(x, y):
@@ -69,11 +68,13 @@ class Game(object):
 
         if not Game.inside(from_r, from_c) or not Game.inside(to_r, to_c):
             print(f'Error, wrong coordinates ({from_r}, {from_c}) -> ({to_r}, {to_c})')
+            return False
 
         if black:
             if (from_r, from_c) in self.bPieces:
                 if (to_r, to_c) in self.bPieces:
                     print('Error, you cant kill yourself!')
+                    return False
                 else:
                     if (to_r, to_c) in self.wPieces:
                         print(f'Killed {self.wPieces[(to_r, to_c)].name.name}')
@@ -84,10 +85,12 @@ class Game(object):
                 
             else:
                 print(f'Error, doesnt exist black piece on ({from_r}, {from_c})')
+                return False
         else:
             if (from_r, from_c) in self.wPieces:
                 if (to_r, to_c) in self.wPieces:
                     print('Error, you cant kill yourself!')
+                    return False
                 else:
                     if (to_r, to_c) in self.bPieces:
                         print(f'Killed {self.bPieces[(to_r, to_c)].name.name}')
@@ -97,6 +100,8 @@ class Game(object):
                     del self.wPieces[(from_r, from_c)]
             else:
                 print(f'Error, doesnt exist white piece on ({from_r}, {from_c})')
+                return False
+        return True
 
     
 
@@ -104,11 +109,9 @@ if __name__ == '__main__':
     print("Game class test")
     g = Game()
     print(g)
-    # print(b.board[(0, 0)].name.name)
-    # print(queenMove)
-    g.move(1, 1, 2, 1, black=True)
-    g.move(1, 1, 2, 1, black=False)
+    g.move(7, 'b', 6, 'b', black=True)
+    g.move(7, 'b', 6, 'b', black=False)
     print(g)
 
-    g.move(1, 2, 6, 2, black=True)
+    g.move(7, 'c', 2, 'c', black=True)
     print(g)
