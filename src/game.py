@@ -3,8 +3,11 @@ from pieces import *
 
 class Game(object):
 
-    bPieces = {}
-    wPieces = {}
+  
+    pieces = []
+    
+    #[0] = wPieces = {}
+    #[1] = bPieces = {}
 
     # board = {}
     # ['Br', 'Bk', 'Bb', 'BQ', 'BK', 'Bb', 'Bk', 'Br'],
@@ -17,19 +20,22 @@ class Game(object):
     # ['Wr', 'Wk', 'Wb', 'WK', 'WQ', 'Wb', 'Wk', 'Wr']]
 
     def __init__(self):
-        self.bPieces = {
+
+        self.pieces = [dict, dict]
+        self.pieces[0] = {
+            (7, 0): wRook, (7, 1): wKnight, (7, 2): wBishop, (7, 3): wKing,
+            (7, 4): wQueen, (7, 5): wBishop, (7, 6): wKnight, (7, 7): wRook,
+            (6, 0): wPawn, (6, 1): wPawn, (6, 2): wPawn, (6, 3): wPawn,
+            (6, 4): wPawn, (6, 5): wPawn, (6, 6): wPawn, (6, 7): wPawn
+        }
+
+        self.pieces[1] = {
             (0, 0): bRook, (0, 1): bKnight, (0, 2): bBishop, (0, 3): bQueen,
             (0, 4): bKing, (0, 5): bBishop, (0, 6): bKnight, (0, 7): bRook,
             (1, 0): bPawn, (1, 1): bPawn, (1, 2): bPawn, (1, 3): bPawn,
             (1, 4): bPawn, (1, 5): bPawn, (1, 6): bPawn, (1, 7): bPawn
         }
 
-        self.wPieces = {
-            (7, 0): wRook, (7, 1): wKnight, (7, 2): wBishop, (7, 3): wKing,
-            (7, 4): wQueen, (7, 5): wBishop, (7, 6): wKnight, (7, 7): wRook,
-            (6, 0): wPawn, (6, 1): wPawn, (6, 2): wPawn, (6, 3): wPawn,
-            (6, 4): wPawn, (6, 5): wPawn, (6, 6): wPawn, (6, 7): wPawn
-        }
 
     def __str__(self):
         cols = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
@@ -40,10 +46,10 @@ class Game(object):
             b += str(8-i)
             for j in range(8):
                 b += ' | '
-                if (i, j) in self.bPieces:
-                    b += str(self.bPieces[(i, j)].icon)
-                elif (i, j) in self.wPieces:
-                    b += str(self.wPieces[(i, j)].icon)
+                if (i, j) in self.pieces[1]:
+                    b += str(self.pieces[1][(i, j)].icon)
+                elif (i, j) in self.pieces[0]:
+                    b += str(self.pieces[0][(i, j)].icon)
                 else:
                     b += '  '
 
@@ -71,33 +77,33 @@ class Game(object):
             return False
 
         if black:
-            if (from_r, from_c) in self.bPieces:
-                if (to_r, to_c) in self.bPieces:
+            if (from_r, from_c) in self.pieces[1]:
+                if (to_r, to_c) in self.pieces[1]:
                     print('Error, you cant kill yourself!')
                     return False
                 else:
-                    if (to_r, to_c) in self.wPieces:
-                        print(f'Killed {self.wPieces[(to_r, to_c)].name.name}')
-                        del self.wPieces[(to_r, to_c)]
+                    if (to_r, to_c) in self.pieces[0]:
+                        print(f'Killed {self.pieces[0][(to_r, to_c)].name.name}')
+                        del self.pieces[0][(to_r, to_c)]
 
-                    self.bPieces[(to_r, to_c)] = self.bPieces[(from_r, from_c)]
-                    del self.bPieces[(from_r, from_c)]
+                    self.pieces[1][(to_r, to_c)] = self.pieces[1][(from_r, from_c)]
+                    del self.pieces[1][(from_r, from_c)]
                 
             else:
                 print(f'Error, doesnt exist black piece on ({from_r}, {from_c})')
                 return False
         else:
-            if (from_r, from_c) in self.wPieces:
-                if (to_r, to_c) in self.wPieces:
+            if (from_r, from_c) in self.pieces[0]:
+                if (to_r, to_c) in self.pieces[0]:
                     print('Error, you cant kill yourself!')
                     return False
                 else:
-                    if (to_r, to_c) in self.bPieces:
-                        print(f'Killed {self.bPieces[(to_r, to_c)].name.name}')
-                        del self.bPieces[(to_r, to_c)]
+                    if (to_r, to_c) in self.pieces[1]:
+                        print(f'Killed {self.pieces[1][(to_r, to_c)].name.name}')
+                        del self.pieces[1][(to_r, to_c)]
 
-                    self.wPieces[(to_r, to_c)] = self.wPieces[(from_r, from_c)]
-                    del self.wPieces[(from_r, from_c)]
+                    self.pieces[0][(to_r, to_c)] = self.pieces[0][(from_r, from_c)]
+                    del self.pieces[0][(from_r, from_c)]
             else:
                 print(f'Error, doesnt exist white piece on ({from_r}, {from_c})')
                 return False
